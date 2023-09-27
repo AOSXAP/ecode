@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./style/core.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <title>ECODE</title>
+</head>
+<body>
+    <section class="hero is-success is-medium">
+        <div class="hero-body">
+          <p class="title">
+            ECODE
+          </p>
+          <p class="subtitle">
+            Platforma pentru invatare asistata.
+          </p>
+        </div>
+    </section>
+
+
+    <div class="central cc container is-fluid">
+        <article class="message is-info">
+            <div class="message-header">
+              <p>Goal</p>
+            </div>
+            <div class="message-body">
+              Site-ul este un spatiu interactiv pentru elaborarea si rezolvarea <strong>testelor quiz</strong>.
+              <p>More tests incoming.</p>
+            </div>
+          </article>
+
+        <article class="panel is-success tweaka">
+            <p class="panel-heading">
+            Continut
+            </p>
+            <p class="panel-tabs">
+            <a id="allx" class="is-active">Toate</a>
+            <a id="infox">info</a>
+            <a id="matex">mate</a>
+            </p>
+            <div class="panel-block">
+            <p class="control has-icons-left">
+                <input id="srch" oninput="Filtre()" class="input is-success" type="text" placeholder="Search">
+                <span class="icon is-left">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                </span>
+            </p>
+            </div>
+            <div id="itemi">
+            </div>
+        </article>
+
+    <script src="https://kit.fontawesome.com/7a34b12c15.js" crossorigin="anonymous"></script>
+    <script>
+    let current_tag = "allx";
+
+      let publicate = [
+        ["ubb info 2022 iulie" , "info_2022_iulie.html" , "infox"],
+        ["ubb info 2022 septembrie" , "info_2022_sept.html", "infox"],
+        ["ubb info 2023 iulie" , "info_2023_iulie.html", "infox"],
+        ["ALGAD 1", "ALGAD.html", "matex"]
+      ];
+
+    window.onload = () => {
+
+      publicate.map((pub) => {
+        document.getElementById("itemi").innerHTML += 
+          `
+          <a href="./subiecte/${pub[1]}" id="allx ${pub[2]}" class="panel-block is-active">
+            ${pub[0]}
+          </a>
+          `;
+      })
+    }
+
+    let tags = ["matex","allx","infox"];
+
+    const inc = (b , a) => {
+      let a_up = a.toUpperCase(), a_low = a.toLowerCase();
+      if(b.includes(a_up) || b.includes(a_low)) return true;
+      return false;
+    }
+
+    tags.map((tag) => {
+      document.getElementById(tag).addEventListener("click", (el) =>{
+        let inp = document.getElementById("srch").value;
+        document.getElementById(current_tag).classList.remove("is-active");
+        current_tag = el.target.id;
+
+        Array.from(document.getElementById("itemi").children).map((el) => {
+          if(!el.id.includes(current_tag) || !inc(el.innerText,inp)){
+            el.style.display = "none";
+          }
+          else el.style.display = "block";
+        })
+        el.target.classList.add("is-active");
+      })
+    })
+
+    function Filtre(){
+      let inp = document.getElementById("srch").value;
+      Array.from(document.getElementById("itemi").children).map((el) => {
+          if(!el.id.includes(current_tag) || !inc(el.innerText,inp)){
+            console.log(el);
+            el.style.display = "none";
+          }
+          else el.style.display = "block";
+      })
+    }
+
+    </script>
+</body>
+</html>
